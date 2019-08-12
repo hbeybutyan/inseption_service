@@ -3,6 +3,13 @@
 #                Docker: https://www.docker.com/
 
 set -e
+
+if ! [[ -x "$command -v docker" ]]; then
+    echo "It seems docker is not installed on your machine."
+    echo "Please refer to official web page for instruction on how to install docker."
+    echo "https://www.docker.com/"
+    exit 1
+fi
 # Buid docker image
 docker build --tag inception_service .
 echo "Successfully built inception service docker container. Running "
