@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+from flask import jsonify
 from inferor import Inferor
 
 inferor = Inferor()
@@ -8,9 +9,44 @@ app = Flask(__name__)
 @app.route("/", methods=["POST"])
 def hello():
     if not request.files or not request.files["image"]:
-        return "No File Uploaded"
-    image = request.files["image"]
-    return "barev::::: " + str(inferor.infer(image))
+        return response_with_404("Bad request type. Missing image in payload.")
+    image = request.files["image"].read()
+    return jsonify(inferor.infer(image))
+
+
+@app.errorhandler(400)
+def error_handler(error):
+    resp = jsonify({"error_message": "Possible problem is wrong request type."})
+    resp.status_code = 400
+    return resp
+
+
+@app.errorhandler(404)
+def error_handler(error):
+    return response_with_404("Requested resource does not exist.")
+
+
+@app.errorhandler(500)
+def error_handler(error):
+    return response_with_500()
+
+
+@app.errorhandler(Exception)
+def error_handler(exception):
+    return response_with_500()
+
+
+def response_with_404(errorMessage):
+    resp = jsonify(({"error_message": errorMessage}))
+    resp.status_code = 404
+    return resp
+
+
+def response_with_500():
+    resp = jsonify(({"error_message": "Internal server error."}))
+    resp.status_code = 500
+    return resp
+
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
