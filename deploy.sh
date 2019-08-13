@@ -2,6 +2,7 @@
 # Prerequisites: 
 #                Docker: https://www.docker.com/
 #                Running docker registry:  https://docs.docker.com/registry/
+#                Installed and configured kubectl: https://kubernetes.io/docs/tasks/tools/install-kubectl/
 
 set -e
 
@@ -19,7 +20,15 @@ if ! [[ -x "$(command -v docker)" ]]; then
     echo "https://www.docker.com/"
     exit 1
 fi
-# Buid docker image
+
+if ! [[ -x "$(command -v kubectl)" ]]; then
+    echo "It seems kubectl is not installed on your machine."
+    echo "Please refer to official web page for instruction on how to install kubectl."
+    echo "https://kubernetes.io/docs/tasks/tools/install-kubectl/"
+    exit 1
+fi
+
+# Build docker image
 docker build --tag $REGISTRY_URL:$REGISTRY_PORT/inception_service .
 echo "Successfully built inception service docker image. "
 
@@ -27,5 +36,16 @@ echo "Successfully built inception service docker image. "
 docker push $REGISTRY_URL:$REGISTRY_PORT/inception_service
 echo "Successfully built inception service docker container. Running "
 
-#Apply k8s configs
+# Apply k8s configs
 
+## Deployment
+kubectl apply -f ./kubernates/deployment.yaml
+
+## Service
+kubectl apply -f ./kubernates/service.yaml
+
+## Ingress
+kubectl apply -f ./kubernates/ingress.yaml
+
+## Secret
+kubectl apply -f ./kubernates/secret.yaml

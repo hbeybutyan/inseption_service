@@ -12,22 +12,14 @@ class Inferor:
     def infer(self, image_data):
         """Runs inference on an image.
         Args:
-          image: Image file name.
+            image: Image to infer features.
         Returns:
-          Nothing
+            { feature_vector:[[1x2048 feature vector]], image_id:example_image_id}
         """
         # Creates graph from saved GraphDef.
         self.load_graph()
 
         with tf.Session() as sess:
-            # Some useful tensors:
-            # 'softmax:0': A tensor containing the normalized prediction across
-            #   1000 labels.
-            # 'pool_3:0': A tensor containing the next-to-last layer containing 2048
-            #   float description of the image.
-            # 'DecodeJpeg/contents:0': A tensor containing a string providing JPEG
-            #   encoding of the image.
-            # Runs the softmax tensor by feeding the image_data as input to the graph.
             features_tensor = sess.graph.get_tensor_by_name('pool_3:0')
             features_predictions = sess.run(features_tensor,
                                    {'DecodeJpeg/contents:0': image_data})

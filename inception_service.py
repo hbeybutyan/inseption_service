@@ -16,11 +16,13 @@ def hello():
 
 @app.errorhandler(400)
 def error_handler(error):
+    app.logger.info("Possible problem is wrong request type.")
     return response_with_400("Possible problem is wrong request type.")
 
 
 @app.errorhandler(404)
 def error_handler(error):
+    app.logger.info("Requested resource does not exist.")
     resp = jsonify({"error_message": "Requested resource does not exist."})
     resp.status_code = 404
     return resp
@@ -37,12 +39,14 @@ def error_handler(exception):
 
 
 def response_with_400(errorMessage):
+    app.logger.info(errorMessage)
     resp = jsonify(({"error_message": errorMessage}))
     resp.status_code = 404
     return resp
 
 
 def response_with_500():
+    app.logger.info("Internal server error.")
     resp = jsonify(({"error_message": "Internal server error."}))
     resp.status_code = 500
     return resp
