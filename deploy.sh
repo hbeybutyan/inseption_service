@@ -34,7 +34,7 @@ echo "Successfully built inception service docker image. "
 
 # Push the image to the registry
 docker push $REGISTRY_URL:$REGISTRY_PORT/inception_service
-echo "Successfully built inception service docker container. Running "
+echo "Successfully pushed inception service docker image to registry."
 
 # Apply k8s configs
 
