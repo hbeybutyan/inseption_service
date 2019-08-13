@@ -41,7 +41,7 @@ def error_handler(exception):
 def response_with_400(errorMessage):
     app.logger.info(errorMessage)
     resp = jsonify(({"error_message": errorMessage}))
-    resp.status_code = 404
+    resp.status_code = 400
     return resp
 
 
