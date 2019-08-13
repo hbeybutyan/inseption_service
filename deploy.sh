@@ -44,8 +44,9 @@ kubectl apply -f ./kubernates/deployment.yaml
 ## Service
 kubectl apply -f ./kubernates/service.yaml
 
+## Secret
+kubectl apply -f ./kubernates/secret.yaml
+
 ## Ingress
 kubectl apply -f ./kubernates/ingress.yaml
 
-## Secret
-kubectl apply -f ./kubernates/secret.yaml
