@@ -66,4 +66,12 @@ You can change the port by providing is to the run script as an argument like:
 ```
 
 
+For your convenience an example image is included in the repo itself. You can test the docker with it as:
+
+```
+curl -i -X POST -H "Content-Type: multipart/form-data" -F "image=@./resources/cropped_panda.jpg" 127.0.0.1:8000
+```
+
+
+
 
