@@ -1,10 +1,13 @@
 from flask import Flask
 from flask import request
 from flask import jsonify
+import logging
 from inferor import Inferor
+
 
 inferor = Inferor()
 app = Flask(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
 @app.route("/", methods=["POST"])
 def hello():
