@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: inception_service
+  labels:
+    app: inception_service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: inception_service
+  template:
+    metadata:
+      labels:
+        app: inception_service
+    spec:
+      containers:
+      - name: inception_service
+        image: inception_service
+        ports:
+        - containerPort: 80000

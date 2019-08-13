@@ -15,9 +15,9 @@ if ! [[ -x "$(command -v docker)" ]]; then
     echo "https://www.docker.com/"
     exit 1
 fi
-# Buid docker image
+# Build docker image
 docker build --tag inception_service .
-echo "Successfully built inception service docker container. Running "
+echo "Successfully built inception service docker image. Running..."
 
 # Run container
 docker run -d -p $PORT_TO_MAP:5000 inception_service

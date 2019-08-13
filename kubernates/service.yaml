@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: inception_service
+  labels:
+    app: inception_service
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    name: http
+    targetPort: 5000
+  selector:
+    app: inception_service
